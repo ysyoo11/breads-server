@@ -13,6 +13,7 @@ export const config = {
     user: required('DB_USER'),
     database: required('DB_DATABASE'),
     password: required('DB_PASSWORD'),
+    port: required('DB_PORT'),
   },
   port: parseInt(required('PORT', 8080)),
   cors: {
@@ -21,7 +22,7 @@ export const config = {
 };
 
 function required(key, defaultVal = undefined) {
-  const value = process.env[key] || defaultVal;
+  const value = process.env[key] ?? defaultVal;
   if (value == null) {
     throw new Error(`Key ${key} is undefined`);
   }
