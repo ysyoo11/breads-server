@@ -67,4 +67,6 @@ router.post('/logout', authController.logOut);
 
 router.get('/me', isAuth, authController.me);
 
+router.get('/csrf-token', authController.csrfToken);
+
 export default router;
