@@ -19,6 +19,9 @@ export const config = {
   cors: {
     allowedOrigin: required('CORS_ALLOWED_ORIGIN'),
   },
+  csrf: {
+    plainToken: required('CSRF_SECRET_KEY'),
+  },
 };
 
 function required(key, defaultVal = undefined) {
