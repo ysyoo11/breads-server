@@ -33,7 +33,7 @@ const validateSignup = [
       minSymbols: 1,
     })
     .withMessage(
-      'Password must include an uppercase letter, numbers and symbols',
+      'Password must include an uppercase letter, numbers and symbols'
     ),
   body('name')
     .trim()
@@ -62,6 +62,8 @@ const validateLogin = [
 router.post('/signup', validateSignup, authController.signUp);
 
 router.post('/login', validateLogin, authController.logIn);
+
+router.post('/logout', authController.logOut);
 
 router.get('/me', isAuth, authController.me);
 
