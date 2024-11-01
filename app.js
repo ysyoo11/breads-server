@@ -1,7 +1,8 @@
-import express from 'express';
 import cors from 'cors';
-import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import express from 'express';
 import helmet from 'helmet';
+import morgan from 'morgan';
 import 'express-async-errors';
 
 import threadsRouter from './router/threads.js';
@@ -14,9 +15,11 @@ const app = express();
 const corsOption = {
   origin: config.cors.allowedOrigin,
   optionsSuccessStatus: 200,
+  credentials: true, // allow the Access-Control-Allow-Credentials -> 서버에서 응답을 보낼 때 이걸 허락한걸 보내면 브라우저가 받았을 때 이 정보를 안전하다고 판단하고 클라이언트 JS에게 보내줌
 };
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(helmet());
 app.use(cors(corsOption));
 app.use(morgan('tiny'));

@@ -7,12 +7,21 @@ import { config } from '../config.js';
 const AUTH_ERROR = { message: 'Authentication Error' };
 
 export const isAuth = async (req, res, next) => {
+  let token;
+  // check the header first (for web clients)
   const authHeader = req.get('Authorization');
-  if (!(authHeader && authHeader.startsWith('Bearer '))) {
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  }
+  // if no token in the header, check the cookie (for mobile clients)
+  if (!token) {
+    token = req.cookies['token'];
+  }
+
+  if (!token) {
     return res.status(401).json(AUTH_ERROR);
   }
 
-  const token = authHeader.split(' ')[1];
   jwt.verify(token, config.jwt.secretKey, async (error, decoded) => {
     if (error) {
       return res.status(401).json(AUTH_ERROR);
